@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - 2.2.2
+services:
+  - redis-server
+script:
+  - bundle exec rspec
+cache:
+  - bundler
