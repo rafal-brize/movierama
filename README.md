@@ -17,7 +17,7 @@ Github has a nice link. Right there, on the right of your page!
 
 #### Dependencies
 
-Install Ruby 2.1.2 if necessary (if you use `rbenv`, it will yell at you if you
+Install Ruby 2.5.1 if necessary (if you use `rbenv`, it will yell at you if you
 don't).
 
 Run `bundler` as usual:
