@@ -1,21 +1,8 @@
 class MoviesController < ApplicationController
   def index
-    # TODO: extract loginc into a Search service
-    if _index_params[:user_id]
-      @submitter = User[_index_params[:user_id]]
-      scope = Movie.find(user_id: @submitter.id)
-    else
-      scope = Movie.all
-    end
-
-    @movies = case _index_params.fetch(:by, 'likers')
-    when 'likers'
-      scope.sort(by: 'Movie:*->liker_count', order: 'DESC')
-    when 'haters'
-      scope.sort(by: 'Movie:*->hater_count', order: 'DESC')
-    when 'date'
-      scope.sort(by: 'Movie:*->created_at',  order: 'DESC')
-    end
+    @movies = MovieSearch.new(
+      scope: Movie.all, creator_id: _index_params[:user_id], current_user: current_user, sort: _index_params[:by], filter: nil
+    ).call
   end
 
   def new

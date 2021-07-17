@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
   resource :session, only: %i(create destroy)
-  post '/auth/:provider/callback', to: 'sessions#create'
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
 
   resources :movies, only: %i(new create destroy) do
     resource :vote, only: %i(create destroy)
