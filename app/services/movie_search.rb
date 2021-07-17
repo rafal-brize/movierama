@@ -5,11 +5,14 @@ class MovieSearch
     @current_user = current_user
     @sort = sort || 'likers'
     @filter = filter
+
+    raise ArgumentError("Need current user to filter") if filter.present? && current_user.blank?
   end
 
   def call
     apply_creator_scope
     apply_sort
+    apply_filter
 
     scope.to_a
   end
@@ -28,6 +31,17 @@ class MovieSearch
                scope.sort(by: 'Movie:*->hater_count', order: 'DESC')
              when 'date'
                scope.sort(by: 'Movie:*->created_at', order: 'DESC')
+             else
+               scope
+             end
+  end
+
+  def apply_filter
+    @scope = case filter
+             when 'my_liked'
+               scope.to_a.select { |movie| movie.likers.include?(current_user) }
+             when 'my_hated'
+               scope.to_a.select { |movie| movie.haters.include?(current_user) }
              else
                scope
              end

@@ -49,12 +49,12 @@ RSpec.describe MovieSearch do
 
   def create_movie(user:, **overrides)
     Movie.create(
-      title:        'Teenage mutant nija turtles',
-      description:  'Technically, we\'re turtles.',
-      date:         '2014-10-17',
-      user:         user,
-      liker_count:  1,
-      hater_count:  237,
+      title: 'Teenage mutant nija turtles',
+      description: 'Technically, we\'re turtles.',
+      date: '2014-10-17',
+      user: user,
+      liker_count: 1,
+      hater_count: 237,
       **overrides
     )
   end
