@@ -8,7 +8,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i() do
-    resources :movies, only: %(index), controller: 'movies'
+    resources :filter, only: %i() do
+      resources :movies, only: %(index), controller: 'movies'
+    end
   end
 
   root 'movies#index'

@@ -11,6 +11,16 @@
             %small submitted by #{@submitter.name}
         - else
           %h2 Movies
+  - if current_user
+    .row.mr-sorter
+      .col-md-12
+        .well.well-sm
+          Filter by
+          = link_to('my_liked', user_filter_movies_path(@user_id, "my_liked"))
+          |
+          = link_to('my_hated', user_filter_movies_path(@user_id, "my_hated"))
+          |
+          = link_to('all', user_filter_movies_path(@user_id, MovieSearch::ALL))
 
   .row.mr-sorter
     .col-md-12
@@ -22,16 +32,6 @@
         |
         = link_to('date', by: 'date')
 
-  - if current_user
-    .row.mr-sorter
-      .col-md-12
-        .well.well-sm
-          Filter by
-          = link_to('my_liked', filter: 'my_liked')
-          |
-          = link_to('my_hated', filter: 'my_hated')
-          |
-          = link_to('all', filter: nil)
   .row
     .col-md-9
       - @movies.each do |movie|
@@ -42,7 +42,7 @@
           .panel-body
             %p
               Posted by
-              = link_to movie.user.name, user_movies_path(movie.user.id)
+              = link_to movie.user.name, user_filter_movies_path(movie.user.id, MovieSearch::ALL)
               = time_ago_in_words(movie.created_at)
               ago
             %p.mr-movie-description= movie.description

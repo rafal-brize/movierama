@@ -1,12 +1,14 @@
 class MovieSearch
+  ALL = 'all'.freeze
+
   def initialize(scope: Movie.all, creator_id: nil, current_user: nil, sort: nil, filter: nil)
     @scope = scope
-    @creator_id = creator_id
+    @creator_id = creator_id == ALL ? nil : creator_id
     @current_user = current_user
     @sort = sort || 'likers'
-    @filter = filter
+    @filter = filter == ALL ? nil : filter
 
-    raise ArgumentError("Need current user to filter") if filter.present? && current_user.blank?
+    raise ArgumentError("Need current user to filter") if @filter.present? && @current_user.blank?
   end
 
   def call

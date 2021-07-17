@@ -1,8 +1,10 @@
 class MoviesController < ApplicationController
   def index
+    @user_id = _index_params[:user_id] || MovieSearch::ALL
+    @filter = _index_params[:filter_id] || MovieSearch::ALL
     @movies = MovieSearch.new(
-      scope: Movie.all, creator_id: _index_params[:user_id],
-      current_user: current_user, sort: _index_params[:by], filter: _index_params[:filter]
+      scope: Movie.all, creator_id: @user_id,
+      current_user: current_user, sort: _index_params[:by], filter: @filter
     ).call
   end
 
@@ -33,7 +35,7 @@ class MoviesController < ApplicationController
   private
 
   def _index_params
-    params.permit(:by, :user_id, :filter)
+    params.permit(:by, :user_id, :filter_id)
   end
 
   def _create_params
