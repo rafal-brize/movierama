@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  redis:
+    image: redislabs/redis
+    ports:
+      - "6379:6379"
+
+  movierama-dependencies:
+    image: centos:centos7 # This image doesn't run anything, but allows us to have links
+    links:
+      - redis
